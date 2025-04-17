@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+
+
+on: 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Node.js
+      uses: action/checkout@v3
+      with:
+        node-version: '16'
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Test
+      run: npm test
+
+    - name: Build Project
+      run: npm run build
+
+    -name: Deploy to Production
+     if: github.ref == 'refs/heads/main'
+     run: echo "Deploying to Production"
+
+
+
+
+    
